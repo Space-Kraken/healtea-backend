@@ -24,5 +24,6 @@ export const typeDef = gql`
     found: Boolean!
     authenticated: Boolean!
     user: User
+    token: String
   }
 `;

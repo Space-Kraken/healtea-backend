@@ -6,9 +6,17 @@ export const typeDef = gql`
   }
 
   extend type Mutation {
-    addAppointment(patient: String!, doctor: String!): Appointment
+    addAppointment(patient: String!): Appointment
     appointmentAddFile(file: Upload!, ctx: ctx!): Appointment
     appointmentRemoveFile(id: String!, file: String!): Appointment
+    appointmentResolution(
+      id: String!
+      doctor: String!
+      status: String!
+      modality: String!
+      place: String!
+      date: Date!
+    ): Appointment
   }
 
   type Appointment {

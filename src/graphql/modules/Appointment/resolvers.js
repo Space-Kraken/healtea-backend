@@ -1,5 +1,6 @@
-import models from "../../models/index.js";
 import { tools } from "./../../../tools/index.js";
+import { UserInputError } from "apollo-server";
+import models from "../../models/index.js";
 import obj from "lodash";
 
 export const resolvers = {
@@ -9,34 +10,32 @@ export const resolvers = {
     },
   },
   Mutation: {
-    addAppointment: async (_, { patient, doctor }, { license }) => {
-      await tools.auth.authorize(license, ["Admin"]);
+    addAppointment: async (_, { patient }, { license }) => {
+      // await tools.auth.authorize(license, ["Admin", "User"]);
       const getPatient = await models.Users.findById({
         _id: patient,
       });
       if (!obj.isEmpty(getPatient)) {
-        const getDoctor = await models.Users.findById({
-          _id: doctor,
+        const newAppointments = await models.Appointments({
+          request: Date.now(),
+          patient: getPatient._id,
+          status: "pending",
+          files: [],
         });
-        if (!obj.isEmpty(getDoctor)) {
-          // let fileList = [];
-          // files.map((file) => {
-          //   fileList.push(file["file"]);
-          // });
-          const newAppointments = await models.Appointments({
-            request: Date.now(),
-            patient: getPatient._id,
-            doctor: getDoctor._id,
-            files: [],
-          });
-          if (await newAppointments.save()) {
-            await models.MedicalRecord.findOneAndUpdate(
-              { patient: newAppointments.patient },
-              { $push: { appointments: [newAppointments._id] } }
-            );
-            return newAppointments;
-          }
+        if (await newAppointments.save()) {
+          await models.MedicalRecord.findOneAndUpdate(
+            { patient: newAppointments.patient },
+            { $push: { appointments: [newAppointments._id] } }
+          );
+          return newAppointments;
         }
+        // if (!obj.isEmpty(getDoctor)) {
+        //   // let fileList = [];
+        //   // files.map((file) => {
+        //   //   fileList.push(file["file"]);
+        //   // });
+
+        // }
       }
     },
     appointmentAddFile: async (_, { file, ctx }) => {
@@ -56,6 +55,45 @@ export const resolvers = {
           return newUpload;
         }
       }
+    },
+    appointmentResolution: async (
+      _,
+      { id, doctor, status, modality, place, date },
+      { license }
+    ) => {
+      // await tools.auth.authorize(license, ["Admin"]);
+      const getDoctor = await models.Users.findById(doctor);
+      // console.log(getDoctor);
+      if (!obj.isEmpty(getDoctor)) {
+        const resolution = await models.Appointments.findOneAndUpdate(
+          { _id: id },
+          {
+            doctor: getDoctor._id,
+            date,
+            status,
+            modality,
+            place,
+          }
+        );
+        if (!obj.isEmpty(resolution)) {
+          await models.Notifications.findOneAndUpdate(
+            { user: resolution.patient },
+            {
+              $push: {
+                notifications: {
+                  date: Date.now(),
+                  title: "Appointment info",
+                  message: "The status of your appointment has changed.",
+                  type: "common",
+                  target: `/Appointment/${resolution._id}`,
+                },
+              },
+            }
+          );
+          return resolution;
+        }
+      }
+      throw new UserInputError("Doctor is not found");
     },
     appointmentRemoveFile: async (_, { id, file }) => {
       // tools.fileHandler.deleteDirs(patient);

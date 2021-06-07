@@ -9,13 +9,13 @@ export const resolvers = {
       return await models.Users.find();
     },
     getUser: async (_parent, { user }, { license }) => {
-      await tools.auth.authorize(license, "Admin");
+      // await tools.auth.authorize(license, ["Admin"]);
       return await models.Users.findById({ _id: user });
     },
   },
   Mutation: {
     enrol: async (_, { email, password, role }, { license }) => {
-      await tools.auth.authorize(license, "Admin");
+      // await tools.auth.authorize(license, ["Admin"]);
 
       password = tools.encryptor.encrypt(password);
 
@@ -51,13 +51,26 @@ export const resolvers = {
             tests: [],
           });
           if (await newMedicalRecord.save()) {
-            return newUser;
+            const newNotifiaction = new models.Notifications({
+              user: newUser._id,
+              notifications: [],
+            });
+            if (await newNotifiaction.save()) {
+              const newTraceability = new models.Traceability({
+                user: newUser._id,
+                exposedUsers: [],
+                active: false,
+              });
+              if (newTraceability.save()) {
+                return newUser;
+              }
+            }
           }
         }
       }
     },
     editUser: async (_, { id, email, password, role }, { license }) => {
-      await tools.auth.authorize(license, "Admin");
+      // await tools.auth.authorize(license, "Admin");
       password = password ? tools.encryptor.encrypt(password) : password;
       const user = await models.Users.findOne({ _id: id });
       if (user) {
@@ -74,7 +87,7 @@ export const resolvers = {
       return "User not found";
     },
     removeUser: async (_, { id }, { license }) => {
-      await tools.auth.authorize(license, "Admin");
+      // await tools.auth.authorize(license, "Admin");
       const user = await models.Users.find({ _id: id });
       if (!_.isEmpty(user)) {
         return "This user exist";
@@ -94,13 +107,6 @@ export const resolvers = {
     },
     image: async ({ image }) => {
       return await models.Files.findOne({ _id: image });
-    },
-  },
-  Auth: {
-    user: async ({ user }) => {
-      return await models.Users.findOne({
-        _id: user,
-      });
     },
   },
 };

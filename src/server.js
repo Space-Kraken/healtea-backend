@@ -16,7 +16,6 @@ export const server = new GraphQLServer({
   context: async ({ request }) => {
     const token = request.headers.token || "";
     const license = await tools.auth.getLicense(token);
-
     return { license };
   },
 });

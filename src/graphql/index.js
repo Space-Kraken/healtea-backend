@@ -13,11 +13,15 @@ import { baseApi } from "./modules/default/index.js";
 import { Appointment } from "./modules/Appointment/index.js";
 import { Files } from "./modules/File/index.js";
 import { MedicalRecord } from "./modules/MedicalRecord/index.js";
+import { Notifications } from "./modules/Notifications/index.js";
 import { Modality } from "./modules/Modality/index.js";
 import { Recipes } from "./modules/Recipes/index.js";
 import { Roles } from "./modules/Role/index.js";
 import { Survey } from "./modules/Survey/index.js";
 import { Test } from "./modules/Test/index.js";
+// import {  } from "./modules/TestType/index.js";
+import { Traceability } from "./modules/Traceability/index.js";
+import TestType from "./models/TestType.js";
 import { Users } from "./modules/User/index.js";
 import { UserData } from "./modules/UserData/index.js";
 
@@ -30,11 +34,13 @@ export const schema = makeExecutableSchema({
     Appointment.typeDef,
     Files.typeDef,
     MedicalRecord.typeDef,
+    Notifications.typeDef,
     Modality.typeDef,
     Recipes.typeDef,
     Roles.typeDef,
     Survey.typeDef,
     Test.typeDef,
+    Traceability.typeDef,
     Users.typeDef,
     UserData.typeDef,
   ], //? data types
@@ -44,11 +50,13 @@ export const schema = makeExecutableSchema({
     Appointment.resolvers,
     Files.resolvers,
     MedicalRecord.resolvers,
+    Notifications.resolvers,
     Modality.resolvers,
     Recipes.resolvers,
     Roles.resolvers,
     Survey.resolvers,
     Test.resolvers,
+    Traceability.resolvers,
     Users.resolvers,
     UserData.resolvers
   ), //? resolvers

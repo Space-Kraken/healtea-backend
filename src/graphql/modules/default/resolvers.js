@@ -15,14 +15,11 @@ export const resolvers = {
         password
       );
       if (found && authenticated) {
-        await models.Users.findOneAndUpdate(
-          { email },
-          { token: tools.encryptor.generateToken(user._id) }
-        );
         return {
           found,
           authenticated,
-          user: user._id,
+          user,
+          token: tools.auth.setToken(user._id),
         };
       }
       return {

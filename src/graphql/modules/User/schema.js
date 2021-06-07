@@ -19,6 +19,7 @@ export const typeDef = gql`
     role: Role!
     medicalRecord: MedicalRecord!
     userData: UserData!
+    notifications: [Notification]
     image: File!
   }
 `;

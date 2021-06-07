@@ -1,6 +1,7 @@
 import { AuthenticationError, ForbiddenError } from "apollo-server";
 import models from "./../../graphql/models/index.js";
 import { encryptor } from "./Encryption.js";
+import jwt from "jsonwebtoken";
 import _ from "lodash";
 
 export const auth = {
@@ -35,17 +36,24 @@ export const auth = {
       authenticated: false,
     };
   },
-  setToken: () => {
-    const token = "123";
+  setToken: (user) => {
+    console.log("setting token");
+    const token = jwt.sign({ user }, "secret");
     return token;
   },
   getLicense: async (token) => {
-    const user = await models.Users.findOne({
-      token,
-    });
+    if (!token) return "";
+
+    const { user } = jwt.verify(token, "secret");
+    // console.log(user);
     if (user) {
-      if (await models.Roles.findById({ _id: user.role })) return user.role;
+      const getUser = await models.Users.findById({
+        _id: user,
+      });
+      if (!getUser) throw new AuthenticationError("Invalid token");
+
+      if (await models.Roles.findById({ _id: getUser.role }))
+        return getUser.role;
     }
-    return user;
   },
 };

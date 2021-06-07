@@ -13,7 +13,7 @@ const cluster =
   "mongodb+srv://dbUser:91982548@cluster0.xosdd.mongodb.net/TestApi?retryWrites=true&w=majority";
 
 //! Constant with mongoDB driver (Dont use in production)
-const mongo = "mongodb://localhost/test";
+const mongo = "mongodb://localhost/healtea";
 
 //? Mongoose useFindAndModify disabled (query configuration)
 mongoose.set("useFindAndModify", false);
