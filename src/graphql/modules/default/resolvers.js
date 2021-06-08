@@ -4,11 +4,6 @@ import models from "./../../models/index.js";
 export const resolvers = {
   Query: {
     greet: () => "Hello world",
-  },
-  Mutation: {
-    greetPerson(_, { name }) {
-      return `Hello ${name}`;
-    },
     login: async (_, { email, password }) => {
       const { found, authenticated, user } = await tools.auth.authenticate(
         email,
@@ -26,6 +21,11 @@ export const resolvers = {
         found,
         authenticated,
       };
+    },
+  },
+  Mutation: {
+    greetPerson(_, { name }) {
+      return `Hello ${name}`;
     },
   },
 };

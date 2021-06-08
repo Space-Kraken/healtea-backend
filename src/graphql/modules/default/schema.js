@@ -13,10 +13,10 @@ export const typeDef = gql`
 
   type Query {
     greet: String!
+    login(email: String!, password: String!): Auth
   }
 
   type Mutation {
-    login(email: String!, password: String!): Auth
     greetPerson(name: String!): String!
   }
 

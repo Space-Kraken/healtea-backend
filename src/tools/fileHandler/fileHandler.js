@@ -54,8 +54,8 @@ const makeUserDir = (userID) => {
 const handleUpload = async ({ stream, extension, mimetype }) => {
   //TODO delete const ctx. User param ctx (test)
   const ctx = {
-    user: "60b46d55c1a78315d06ebbe6",
-    type: "document",
+    user: "60beaebd064930291c0e133d",
+    type: "image",
   };
   const userDir = makeUserDir(ctx.user);
   if (fs.existsSync(userDir)) {
