@@ -5,6 +5,23 @@ export const resolvers = {
     getMedicalRecords: async () => {
       return await models.MedicalRecord.find();
     },
+    getStatistics: async () => {
+      const infectionTracking = {
+        infected: await models.MedicalRecord.find({
+          status: "Infected",
+        }).countDocuments(),
+        healty: await models.MedicalRecord.find({
+          status: "Healty",
+        }).countDocuments(),
+        uknow: await models.MedicalRecord.find({
+          status: "Uknow",
+        }).countDocuments(),
+      };
+      console.log(infectionTracking);
+      return {
+        infections: infectionTracking,
+      };
+    },
   },
   MedicalRecord: {
     patient: async ({ patient }) => {

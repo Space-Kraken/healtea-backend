@@ -5,7 +5,7 @@ import _ from "lodash";
 export const resolvers = {
   Query: {
     getAllUsers: async (_parent, _args, { license }) => {
-      await tools.auth.authorize(license, ["Admin"]);
+      // await tools.auth.authorize(license, ["Admin"]);
       return await models.Users.find();
     },
     getUser: async (_parent, { user }, { license }) => {
@@ -24,7 +24,8 @@ export const resolvers = {
         password,
         role,
         token: "NA",
-        image: "60b134907ac52b2ba8055dfc",
+        image: "60beb9fcb3652a0824265c81",
+        active: true,
       });
       if (await newUser.save()) {
         tools.fileHandler.createDirs(newUser._id);

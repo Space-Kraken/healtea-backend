@@ -17,6 +17,7 @@ export const typeDef = gql`
     email: String!
     password: String!
     role: Role!
+    active: Boolean!
     medicalRecord: MedicalRecord!
     userData: UserData!
     notifications: [Notification]

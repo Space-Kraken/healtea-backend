@@ -3,6 +3,7 @@ import { gql } from "apollo-server";
 export const typeDef = gql`
   extend type Query {
     getMedicalRecords: [MedicalRecord]
+    getStatistics: Statistics
   }
 
   type MedicalRecord {
@@ -13,5 +14,15 @@ export const typeDef = gql`
     surveys: [Survey]
     recipes: [Recipe]
     tests: [Test]
+  }
+
+  type Statistics {
+    infections: infectionTracking
+  }
+
+  type infectionTracking {
+    healty: String!
+    infected: String!
+    uknow: String!
   }
 `;

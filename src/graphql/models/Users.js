@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   role: { type: String, required: true },
   notifications: [{ type: String, required: true }],
   image: { type: String, required: false },
+  active: { type: Boolean, required: true },
 });
 
 export default mongoose.model("Users", UserSchema);
