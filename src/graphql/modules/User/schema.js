@@ -8,7 +8,13 @@ export const typeDef = gql`
 
   extend type Mutation {
     enrol(email: String!, password: String!, role: String!): User!
-    editUser(id: String!, email: String, password: String, role: String): String
+    editUser(
+      id: String!
+      email: String
+      password: String
+      role: String
+      active: Boolean
+    ): User
     removeUser(id: String!): String!
   }
 

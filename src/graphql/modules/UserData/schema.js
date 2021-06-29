@@ -9,7 +9,7 @@ export const typeDef = gql`
       gender: String
       address: AddressInput
       tel: String
-    ): String
+    ): User
   }
 
   type UserData {

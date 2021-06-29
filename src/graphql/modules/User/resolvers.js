@@ -70,22 +70,23 @@ export const resolvers = {
         }
       }
     },
-    editUser: async (_, { id, email, password, role }, { license }) => {
+    editUser: async (_, { id, email, password, role, active }, { license }) => {
       // await tools.auth.authorize(license, "Admin");
       password = password ? tools.encryptor.encrypt(password) : password;
       const user = await models.Users.findOne({ _id: id });
       if (user) {
-        await models.Users.findByIdAndUpdate(
+        const update = await models.Users.findByIdAndUpdate(
           { _id: id },
           {
             email: email ? email : user.email,
             password: password ? password : user.password,
             role: role ? role : user.role,
+            active,
           }
         );
-        return "User updated successfully";
+        return update;
       }
-      return "User not found";
+      return update;
     },
     removeUser: async (_, { id }, { license }) => {
       // await tools.auth.authorize(license, "Admin");
