@@ -54,4 +54,17 @@ export const resolvers = {
       }
     },
   },
+  Recipe: {
+    patient: async ({ patient }) => {
+      return await models.Users.findById(patient);
+    },
+    doctor: async ({ doctor }) => {
+      return await models.Users.findById(doctor);
+    },
+    files: async ({ files }) => {
+      return await models.Files.find({
+        _id: { $in: files },
+      });
+    },
+  },
 };

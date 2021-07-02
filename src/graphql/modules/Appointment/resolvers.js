@@ -8,6 +8,9 @@ export const resolvers = {
     getAppointments: async () => {
       return await models.Appointments.find();
     },
+    getAppointment: async (_, { id }, { license }) => {
+      return await models.Appointments.findById(id);
+    },
   },
   Mutation: {
     addAppointment: async (_, { patient }, { license }) => {
@@ -113,7 +116,7 @@ export const resolvers = {
     },
     doctor: async ({ doctor }) => {
       return await models.Users.findById({
-        _id: doctor,
+        _id: doctor ? doctor : "00aa00000aaa0000000a000a",
       });
     },
     files: async ({ files }) => {

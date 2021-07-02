@@ -3,6 +3,7 @@ import { gql } from "apollo-server";
 export const typeDef = gql`
   extend type Query {
     getAppointments: [Appointment]
+    getAppointment(id: String!): Appointment!
   }
 
   extend type Mutation {
@@ -23,11 +24,11 @@ export const typeDef = gql`
     id: ID!
     request: Date!
     patient: User!
-    doctor: User!
+    doctor: User
     date: Date
     status: String!
-    modality: String!
-    place: String!
+    modality: String
+    place: String
     files: [File]
   }
 `;

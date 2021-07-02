@@ -11,7 +11,7 @@ export const resolvers = {
           status: "Infected",
         }).countDocuments(),
         healty: await models.MedicalRecord.find({
-          status: "Healty",
+          status: "Healthy",
         }).countDocuments(),
         uknow: await models.MedicalRecord.find({
           status: "Uknow",
@@ -21,6 +21,17 @@ export const resolvers = {
       return {
         infections: infectionTracking,
       };
+    },
+  },
+  Mutation: {
+    updateStatus: async (_, { id, status }, { license }) => {
+      const updateStatus = await models.MedicalRecord.findOneAndUpdate(
+        { patient: id },
+        {
+          status,
+        }
+      );
+      return updateStatus;
     },
   },
   MedicalRecord: {

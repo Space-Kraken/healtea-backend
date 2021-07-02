@@ -9,7 +9,7 @@ export const resolvers = {
     },
   },
   Mutation: {
-    addTest: async (_, { requester, patient, type, laboratory }) => {
+    addTest: async (_, { requester, patient, type, laboratory, status }) => {
       const getRequester = await models.Users.findById({
         _id: requester,
       });
@@ -22,6 +22,7 @@ export const resolvers = {
             requester: getRequester._id,
             patient: getPatient._id,
             type,
+            status,
             laboratory,
             files: [],
           });

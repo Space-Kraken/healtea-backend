@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 
 //! Constant with cluster key (Dont use in production)
 const cluster =
-  "mongodb+srv://dbUser:91982548@cluster0.xosdd.mongodb.net/TestApi?retryWrites=true&w=majority";
+  "mongodb+srv://dbUser:91982548@cluster0.xosdd.mongodb.net/healtea?retryWrites=true&w=majority";
 
 //! Constant with mongoDB driver (Dont use in production)
 const mongo = "mongodb://localhost/healtea";
@@ -21,7 +21,7 @@ mongoose.set("useFindAndModify", false);
 //* Mongoose var
 mongoose
   //* Connect method
-  .connect(mongo, {
+  .connect(cluster, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

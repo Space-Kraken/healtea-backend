@@ -15,7 +15,7 @@ export const typeDef = gql`
     patient: User!
     date: Date
     answers: String
-    modality: Modality!
+    modality: String!
     other: String
     completed: Boolean!
   }

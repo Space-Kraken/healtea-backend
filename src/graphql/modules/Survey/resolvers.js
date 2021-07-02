@@ -47,10 +47,10 @@ export const resolvers = {
         _id: patient,
       });
     },
-    modality: async ({ modality }) => {
-      return models.Modality.findById({
-        _id: modality,
-      });
-    },
+    // modality: async ({ modality }) => {
+    //   return models.Modality.findById({
+    //     _id: modality,
+    //   });
+    // },
   },
 };

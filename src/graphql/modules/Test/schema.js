@@ -10,6 +10,7 @@ export const typeDef = gql`
       patient: String!
       type: String!
       laboratory: String!
+      status: String!
     ): Test
     updateTest(test: String!, status: String!, resoult: String!): Test!
     testAddFile(file: Upload!, ctx: ctx!): Test

@@ -25,7 +25,7 @@ export const typeDef = gql`
     role: Role!
     active: Boolean!
     medicalRecord: MedicalRecord!
-    userData: UserData!
+    userData: UserData
     notifications: [Notification]
     image: File!
   }

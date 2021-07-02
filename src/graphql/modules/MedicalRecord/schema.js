@@ -6,6 +6,10 @@ export const typeDef = gql`
     getStatistics: Statistics
   }
 
+  extend type Mutation {
+    updateStatus(id: String!, status: String!): MedicalRecord
+  }
+
   type MedicalRecord {
     id: ID!
     patient: User!
